@@ -86,7 +86,7 @@ const EditActus = ({ id, categories, setCurrentMenu }) => {
 
 
     useEffect(() => {
-        fetch('https://alrahma.ammadec.com/backend/actualites/getActusById.php?id=' + id, {
+        fetch('https://sajda-back.vercel.app/posts/post/' + id, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -114,7 +114,7 @@ const EditActus = ({ id, categories, setCurrentMenu }) => {
 
     const checkLog = () => {
         const { title, content, image, category } = inputState;
-        return fetch('https://alrahma.ammadec.com/backend/actualites/createActus.php', {
+        return fetch('https://sajda-back.vercel.app/posts', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -160,8 +160,8 @@ const EditActus = ({ id, categories, setCurrentMenu }) => {
 
     const ActionDelete = (action) => {
         if (action == true) {
-            fetch('https://alrahma.ammadec.com/backend/actualites/deleteActus.php?id=' + id, {
-                method: 'GET',
+            fetch('https://sajda-back.vercel.app/posts/delete/' + id, {
+                method: 'DELETE',
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',

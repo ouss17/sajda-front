@@ -45,7 +45,7 @@ const ConfigMasdjid = () => {
 
 
   useEffect(() => {
-    fetch('https://alrahma.ammadec.com/backend/config/configMasdjid.php?id=1', {
+    fetch('https://sajda-back.vercel.app/mosquees/1', {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -69,13 +69,13 @@ const ConfigMasdjid = () => {
         // });
         setInputState({
           ...inputState,
-          iqamaFajr: datas.datas.iqamaFajr,
-          iqamaDhuhr: datas.datas.iqamaDhuhr,
-          iqamaAsr: datas.datas.iqamaAsr,
-          iqamaMaghrib: datas.datas.iqamaMaghrib,
-          iqamaIsha: datas.datas.iqamaIsha,
-          nbJumuas: datas.datas.nbJumuas,
-          jumuas: datas.datas.jumuas,
+          iqamaFajr: datas.data.iqamaFajr,
+          iqamaDhuhr: datas.data.iqamaDhuhr,
+          iqamaAsr: datas.data.iqamaAsr,
+          iqamaMaghrib: datas.data.iqamaMaghrib,
+          iqamaIsha: datas.data.iqamaIsha,
+          nbJumuas: datas.data.nbJumuas,
+          jumuas: datas.data.jumuas,
         })
 
       })

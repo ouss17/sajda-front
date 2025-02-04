@@ -131,7 +131,7 @@ const FeedbackPopUp = ({ feedback, setOpenResPop, behavior }) => {
 
     const checkLog = () => {
         const { response } = inputState;
-        return fetch('https://alrahma.ammadec.com/backend/feedbacks/answerFeedback.php', {
+        return fetch('https://sajda-back.vercel.app/responses', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',

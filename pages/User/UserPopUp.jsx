@@ -52,16 +52,15 @@ const UserPopUp = ({ user, setOpenPop, roles, GetActu }) => {
 
     const checkLog = () => {
         const { idRole } = inputState;
-        return fetch('https://alrahma.ammadec.com/backend/user/updateUser.php', {
-            method: 'POST',
+        return fetch('https://sajda-back.vercel.app/users/updateRole/'+user.id, {
+            method: 'PUT',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
                 state: "update",
-                role: idRole,
-                id: user.id
+                role: idRole
             }),
         })
             .then(response => response.text())
@@ -93,15 +92,14 @@ const UserPopUp = ({ user, setOpenPop, roles, GetActu }) => {
     const [errorDelete, setErrorDelete] = useState(false)
 
     const DeleteUser = (user) => {
-        return fetch('https://alrahma.ammadec.com/backend/user/updateUser.php', {
-            method: 'POST',
+        return fetch('https://sajda-back.vercel.app/users/delete/'+user.id, {
+            method: 'DELETE',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
                 state: "delete",
-                id: user.id
             }),
         })
             .then(response => response.text())

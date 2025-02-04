@@ -42,7 +42,7 @@ const ProfilUser = ({ handleMemoryClick }) => {
             password,
             newPassword
         } = inputState;
-        return fetch('https://alrahma.ammadec.com/backend/user/connectUser.php', {
+        return fetch('https://sajda-back.vercel.app/users/getMe', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',

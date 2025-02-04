@@ -9,7 +9,7 @@ const GetFeedbackDev = () => {
 
     const [allFeedbacks, setAllFeedbacks] = useState([]);
     const getActus = () => {
-        return fetch('https://alrahma.ammadec.com/backend/feedbacks/getFeedbacksByTarget.php?id=1&target=developper', {
+        return fetch('https://sajda-back.vercel.app/feedback/target/1/developper', {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -21,7 +21,7 @@ const GetFeedbackDev = () => {
             })
             .then(
                 (res => {
-                    setAllFeedbacks(res);
+                    setAllFeedbacks(res.data);
                     // console.log(res);
                 })
             )
@@ -67,15 +67,12 @@ const GetFeedbackDev = () => {
     const [successDelete, setSuccessDelete] = useState(false)
     const [errorDelete, setErrorDelete] = useState(false)
     const DeleteFeed = (feedback) => {
-        return fetch('https://alrahma.ammadec.com/backend/feedbacks/deleteFeedback.php', {
-            method: 'POST',
+        return fetch('https://sajda-back.vercel.app/feedbacks/delete/'+feedback.idFeedback, {
+            method: 'DELETE',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                id: feedback.idFeedback
-            }),
         })
             .then(response => response.text())
             .then(data => {

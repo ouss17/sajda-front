@@ -24,7 +24,7 @@ const Settings = () => {
     }
     const { session, setSession } = useContext(SessionContext);
     const checkSession = () => {
-        return fetch('https://alrahma.ammadec.com/backend/user/connectUser.php', {
+        return fetch('https://sajda-back.vercel.app/users/getMe', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -49,15 +49,12 @@ const Settings = () => {
     };
 
     const destroySession = () => {
-        return fetch('https://alrahma.ammadec.com/backend/user/connectUser.php', {
-            method: 'POST',
+        return fetch('https://sajda-back.vercel.app/users/logout', {
+            method: 'GET',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                state: "logout",
-            }),
         })
             .then(json => {
                 return json.json();

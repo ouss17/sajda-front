@@ -13,7 +13,7 @@ const GetFeedbackMasdjid = () => {
     const [allFeedbacks, setAllFeedbacks] = useState([]);
     const getActus = () => {
 
-        return fetch('https://alrahma.ammadec.com/backend/feedbacks/getFeedbacksByTarget.php?id=1&target=masdjid', {
+        return fetch('https://sajda-back.vercel.app/feedback/target/1/masdjid', {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -27,7 +27,7 @@ const GetFeedbackMasdjid = () => {
                 (res => {
                     // res.datas.sort((a, b) => a.checked - b.checked);
                     // console.log(res);
-                    setAllFeedbacks(res.datas);
+                    setAllFeedbacks(res.data);
                 })
             )
             .catch(error => {
@@ -64,7 +64,7 @@ const GetFeedbackMasdjid = () => {
         if (!feedback.checked) {
 
             if (feedback.idFeedback !== openedContentIndex) {
-                fetch('https://alrahma.ammadec.com/backend/feedbacks/checkFeedback.php', {
+                fetch('https://sajda-back.vercel.app/feedbacks/delete/'+feedback.idFeedback, {
                     method: 'POST',
                     headers: {
                         Accept: 'application/json',

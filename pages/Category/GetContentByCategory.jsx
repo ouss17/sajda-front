@@ -9,7 +9,7 @@ const GetContentByCategory = ({ handleMemoryClick, category, content, setContent
     const dimensionsForScreen = Dimensions.get("screen");
     const [contents, setContents] = useState([]);
     useEffect(() => {
-        fetch(`https://alrahma.ammadec.com/backend/actualites/getContentByCat.php?id=${category.id}`, {
+        fetch(`https://sajda-back.vercel.app/posts/category/1/${category.id}`, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',

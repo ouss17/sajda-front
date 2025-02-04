@@ -8,7 +8,7 @@ const GetFeedbacks = ({ handleMemoryClick }) => {
 
     const [allFeedbacks, setAllFeedbacks] = useState([]);
     const getActus = () => {
-        return fetch('https://alrahma.ammadec.com/backend/feedbacks/getFeedbacks.php?id=1', {
+        return fetch('https://sajda-back.vercel.app/feedbacks/mosquee/1', {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -20,7 +20,7 @@ const GetFeedbacks = ({ handleMemoryClick }) => {
             })
             .then(
                 (res => {
-                    setAllFeedbacks(res);
+                    setAllFeedbacks(res.data);
                     // console.log(res);
                 })
             )

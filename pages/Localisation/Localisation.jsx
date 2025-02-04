@@ -27,7 +27,7 @@ const Localisation = () => {
     // const [masdjid, setMasdjid] = useState();
 
     const getMasdjidd = () => {
-        fetch("https://alrahma.ammadec.com/backend/masdjid/getMasdjid.php?id=1", {
+        fetch('https://sajda-back.vercel.app/mosquees/1', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -38,7 +38,7 @@ const Localisation = () => {
                 // console.log(data);
                 let results = JSON.parse(data);
 
-                setMasdjid(results.datas)
+                setMasdjid(results.data)
 
             })
             .catch(error => console.error(error));

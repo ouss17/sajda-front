@@ -12,7 +12,7 @@ const Actus = ({ handleMemoryClick }) => {
 
     const [categories, setCategories] = useState([]);
     useEffect(() => {
-        fetch("https://alrahma.ammadec.com/backend/actualites/retrieveCategories.php", {
+        fetch("https://sajda-back.vercel.app/categories", {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

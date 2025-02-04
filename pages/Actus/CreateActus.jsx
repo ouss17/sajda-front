@@ -78,7 +78,7 @@ const CreateActus = ({ handleMemoryClick, categories }) => {
 
   const checkLog = () => {
     const { title, content, image, category } = inputState;
-    return fetch('https://alrahma.ammadec.com/backend/actualites/createActus.php', {
+    return fetch('https://sajda-back.vercel.app/actus', {
       method: 'POST',
       headers: {
         Accept: 'application/json',

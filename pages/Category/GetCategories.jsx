@@ -15,7 +15,7 @@ const GetCategories = ({ handleMemoryClick, setCategory }) => {
     };
 
     useEffect(() => {
-        fetch('https://alrahma.ammadec.com/backend/actualites/getCategories.php', {
+        fetch('https://sajda-back.vercel.app/categories', {
             method: 'GET',
             headers: {
                 Accept: 'application/json',

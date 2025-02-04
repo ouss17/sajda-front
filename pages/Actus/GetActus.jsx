@@ -8,7 +8,7 @@ const GetActus = () => {
 
     const [allActus, setAllActus] = useState([]);
     const getActus = () => {
-        return fetch('https://alrahma.ammadec.com/backend/actualites/getActus.php', {
+        return fetch('https://sajda-back.vercel.app/posts/available', {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -21,7 +21,7 @@ const GetActus = () => {
             .then(
                 (res => {
                     // console.log(res);
-                    setAllActus(res);
+                    setAllActus(res.data);
                 })
             )
             .catch(error => {

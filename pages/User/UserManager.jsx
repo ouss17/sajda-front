@@ -15,25 +15,6 @@ const UserManager = ({ handleMemoryClick }) => {
 
     }, [])
 
-    const [roles, setRole] = useState([]);
-    useEffect(() => {
-        fetch("https://alrahma.ammadec.com/backend/user/getRoles.php", {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        })
-            .then(response => response.text())
-            .then(data => {
-                let results = JSON.parse(data);
-                // console.log(results);
-
-                setRole(results)
-
-            })
-            .catch(error => console.error(error));
-    }, [])
-
 
 
     function sendNotif() {
@@ -60,7 +41,7 @@ const UserManager = ({ handleMemoryClick }) => {
     }
 
     const GetActu = () => {
-        return fetch('https://alrahma.ammadec.com/backend/user/getUsers.php', {
+        return fetch('https://sajda-back.vercel.app/users', {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -74,7 +55,7 @@ const UserManager = ({ handleMemoryClick }) => {
                 (res => {
                     // console.log(res);
                     // let results = JSON.parse(res);
-                    setUsers(res);
+                    setUsers(res.data);
                 })
             )
             .catch(error => {
@@ -118,7 +99,7 @@ const UserManager = ({ handleMemoryClick }) => {
             {
                 openPop
                 &&
-                <UserPopUp user={user} setOpenPop={setOpenPop} roles={roles} GetActu={GetActu} />
+                <UserPopUp user={user} setOpenPop={setOpenPop} GetActu={GetActu} />
             }
             <ScrollView style={styles.containerForm}>
                 {

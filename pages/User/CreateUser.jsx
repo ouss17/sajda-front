@@ -39,7 +39,7 @@ const CreateUser = () => {
 
     const checkLog = () => {
         const { userName, email, userPass } = inputState;
-        return fetch('https://alrahma.ammadec.com/backend/user/createUser.php', {
+        return fetch('https://sajda-back.vercel.app/users/signup', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',

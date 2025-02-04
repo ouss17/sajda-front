@@ -50,7 +50,7 @@ const LoginUser = () => {
 
     const checkLog = () => {
         const { userName, userPass } = inputState;
-        return fetch('https://alrahma.ammadec.com/backend/user/connectUser.php', {
+        return fetch('https://sajda-back.vercel.app/users/signin', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',

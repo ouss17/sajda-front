@@ -83,7 +83,7 @@ const CreateFeedbacks = ({ setIsFeedback }) => {
     const checkLog = (action) => {
         if (action == true) {
             const { title, detail, idUser, target, idMasdjid, emailUser } = inputState;
-            return fetch('https://alrahma.ammadec.com/backend/feedbacks/createFeedback.php', {
+            return fetch('https://sajda-back.vercel.app/feedbacks', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',

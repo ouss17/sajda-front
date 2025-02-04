@@ -28,7 +28,7 @@ const CreateCategory = () => {
 
     const checkLog = () => {
         const { title, comment } = inputState;
-        return fetch('https://alrahma.ammadec.com/backend/actualites/createCategory.php', {
+        return fetch('https://sajda-back.vercel.app/categories', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',

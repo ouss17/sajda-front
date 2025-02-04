@@ -42,7 +42,7 @@ const UpdateMasdjid = () => {
 
 
     useEffect(() => {
-        fetch('https://alrahma.ammadec.com/backend/masdjid/getMasdjid.php?id=1', {
+        fetch('https://sajda-back.vercel.app/mosquees/1', {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -72,8 +72,8 @@ const UpdateMasdjid = () => {
 
     const checkLog = () => {
         const { id, name, localisation, num, facebook, instagram, twitter } = inputState;
-        return fetch('https://alrahma.ammadec.com/backend/masdjid/createMasdjid.php', {
-            method: 'POST',
+        return fetch('https://sajda-back.vercel.app/mosquees/update/1', {
+            method: 'PUT',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',

@@ -19,7 +19,7 @@ const Horaires = () => {
      * Récupère les informations de la mosquée ainsi que sa configuration
      */
     const getMasdjidd = () => {
-        fetch("https://alrahma.ammadec.com/backend/config/configMasdjid.php?id=1", {
+        fetch('https://sajda-back.vercel.app/mosquees/1', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -30,23 +30,8 @@ const Horaires = () => {
                 // console.log(data);
                 let results = JSON.parse(data);
 
-                setMasdjidConfig(results.datas)
-
-                fetch("https://alrahma.ammadec.com/backend/masdjid/getMasdjid.php?id=1", {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                })
-                    .then(response => response.text())
-                    .then(data => {
-                        // console.log(data);
-                        let results = JSON.parse(data);
-
-                        setMasdjid(results.datas)
-
-                    })
-                    .catch(error => console.error(error));
+                setMasdjidConfig(results.data)
+                setMasdjid(results.data)
 
             })
             .catch(error => console.error(error));
@@ -149,7 +134,7 @@ const Horaires = () => {
 
         let formattedDate = day + '/' + month + '/' + year;
 
-        fetch('https://alrahma.ammadec.com/backend/horaires/getCsv.php?id=1&year=' + date.getFullYear(), {
+        fetch('https://sajda-back.vercel.app/mosquees/csv/1/' + date.getFullYear(), {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -182,7 +167,7 @@ const Horaires = () => {
 
     return (
         <>
-            {/* <Image style={[styles.bg2, imageStyle]} source={require('../../assets/ressources/pages/horaires.png')} />
+            <Image style={[styles.bg2, imageStyle]} source={require('../../assets/ressources/pages/horaires.png')} />
             {
                 isFeedback
                 &&
@@ -268,7 +253,7 @@ const Horaires = () => {
                         </View>
                     </>
                 }
-            </ScrollView> */}
+            </ScrollView>
         </>
     )
 }
