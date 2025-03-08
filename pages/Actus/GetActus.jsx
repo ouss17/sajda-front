@@ -8,7 +8,7 @@ const GetActus = () => {
 
     const [allActus, setAllActus] = useState([]);
     const getActus = () => {
-        return fetch('https://sajda-back.vercel.app/posts/available', {
+        return fetch('http://192.168.1.25:3003/posts/available', {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -20,7 +20,7 @@ const GetActus = () => {
             })
             .then(
                 (res => {
-                    // console.log(res);
+                    console.log(res);
                     setAllActus(res.data);
                 })
             )
@@ -74,7 +74,7 @@ const GetActus = () => {
                         ?
                         allActus.map(actu => (
                             <Pressable key={actu.id} style={[styles.actuContainer]} onPress={() => handleClick(actu.id)}>
-                                <Text style={[styles.date]}>{actu.creationTimestamp.split(' ')[0].replaceAll('-', '/').split('/').reverse().join('/')}</Text>
+                                <Text style={[styles.date]}>{actu.created_at.split(' ')[0].replaceAll('-', '/').split('/').reverse().join('/')}</Text>
                                 <Text style={[styles.title]}>
                                     {actu.title}
                                 </Text>

@@ -27,7 +27,7 @@ const Localisation = () => {
     // const [masdjid, setMasdjid] = useState();
 
     const getMasdjidd = () => {
-        fetch('https://sajda-back.vercel.app/mosquees/1', {
+        fetch('http://192.168.1.25:3003/mosquees/1', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -77,8 +77,8 @@ const Localisation = () => {
                 masdjid &&
                 <View style={styles.localisation}>
                     <Text style={styles.texts}>Mosquée : {masdjid.name}</Text>
-                    <Text style={styles.texts}>Adresse : {masdjid.localisation}</Text>
-                    <Text style={styles.texts}>Téléphone : {masdjid.num}</Text>
+                    <Text style={styles.texts}>Adresse : {masdjid.address + ' ' + masdjid.city + ', ' + masdjid.zip + ' ' + masdjid.country}</Text>
+                    <Text style={styles.texts}>Téléphone : {masdjid.numero}</Text>
                     {
                         ((masdjid.facebook != null && masdjid.facebook != '') || (masdjid.instagram != null && masdjid.instagram != '') || (masdjid.twitter != null && masdjid.twitter != '')) &&
                         <View style={styles.socialContent}>

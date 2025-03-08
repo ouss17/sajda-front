@@ -19,7 +19,7 @@ const Horaires = () => {
      * Récupère les informations de la mosquée ainsi que sa configuration
      */
     const getMasdjidd = () => {
-        fetch('https://sajda-back.vercel.app/mosquees/1', {
+        fetch('http://192.168.1.25:3003/mosquees/1', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -86,8 +86,8 @@ const Horaires = () => {
 
     useEffect(() => {
         // console.log(phoneticDate);
-        console.log(new Intl.DateTimeFormat('fr-TN-u-ca-islamic', { day: 'numeric', month: 'long', weekday: 'long', year: 'numeric' }).format(Date.now()));
-        console.log(new Intl.DateTimeFormat('fr-TN-u-ca-islamic', { day: 'numeric', month: 'long', weekday: 'long', year: 'numeric' }).format(Date.now()).split(' ').map((value, index) => index == 0 ? daysArabic[value] : value).join(' '));
+        // console.log(new Intl.DateTimeFormat('fr-TN-u-ca-islamic', { day: 'numeric', month: 'long', weekday: 'long', year: 'numeric' }).format(Date.now()));
+        // console.log(new Intl.DateTimeFormat('fr-TN-u-ca-islamic', { day: 'numeric', month: 'long', weekday: 'long', year: 'numeric' }).format(Date.now()).split(' ').map((value, index) => index == 0 ? daysArabic[value] : value).join(' '));
     }, [hijriDate]);
 
     /**
@@ -102,7 +102,7 @@ const Horaires = () => {
                 setCurrentHour(`${date.getHours() < 10 ? "0" + date.getHours() : date.getHours()}:${date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()}`);
                 setHijriDate(new Intl.DateTimeFormat('ar-TN-u-ca-islamic', { day: 'numeric', month: 'long', weekday: 'long', year: 'numeric' }).format(Date.now()));
                 // TIME STAMP POSSIBLE ECART 15 MIN
-                if (horaires.length > 0) {
+                if (horaires && horaires.length > 0) {
                     if (`${date.getHours() < 10 ? "0" + date.getHours() : date.getHours()}:${date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()}` == horaires[0]) {
                         setCurrentPrayer('fajr');
                     } else if (`${date.getHours() < 10 ? "0" + date.getHours() : date.getHours()}:${date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()}` == horaires[2]) {
@@ -134,7 +134,7 @@ const Horaires = () => {
 
         let formattedDate = day + '/' + month + '/' + year;
 
-        fetch('https://sajda-back.vercel.app/mosquees/csv/1/' + date.getFullYear(), {
+        fetch('http://192.168.1.25:3003/mosquees/csv/1/' + date.getFullYear(), {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -146,9 +146,11 @@ const Horaires = () => {
             })
             .then(
                 (res => {
-                    console.log(formattedDate);
-                    console.log(res[formattedDate]);
-                    setHoraires(res[formattedDate]);
+                    // console.log(res.data["08/03/2025"]);
+                    
+                    // console.log(formattedDate);
+                    // console.log(res[formattedDate]);
+                    setHoraires(res.data[formattedDate]);
                 })
             )
             .catch(error => {
@@ -197,7 +199,7 @@ const Horaires = () => {
                     <Text style={[styles.texts]}>صلاة</Text>
                 </View>
                 {
-                    horaires.length > 0 &&
+                    (horaires && horaires.length) > 0 &&
                     <View style={styles.salatHoursPage}>
                         <View className="hour-salat fajr" style={[styles.hourSalat, currentPrayer == 'fajr' && styles.prayIt]}>
                             <Text className="name-french" style={[styles.text, styles.nameFrench, currentPrayer == 'fajr' && styles.prayItText]}>Fajr</Text>
@@ -241,7 +243,7 @@ const Horaires = () => {
                         </View>
                         <View style={[styles.jumuasShow]}>
                             {
-                                masdjidConfig.jumuas !== "" &&
+                                (masdjidConfig.jumuas !== "" && masdjidConfig.jumuas !== null) &&
                                     masdjidConfig.jumuas.includes(',')
                                     ?
                                     masdjidConfig.jumuas.split(",").map((jumua, index) => (
