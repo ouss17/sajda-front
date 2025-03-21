@@ -7,7 +7,7 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
-     "androidNavigationBar": {
+    "androidNavigationBar": {
       "visible": "immersive"
     },
     "splash": {
@@ -22,7 +22,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.anonymous.sajda"
     },
     "web": {
       "favicon": "./assets/favicon.png"

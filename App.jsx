@@ -6,7 +6,6 @@ import { persistReducer, persistStore } from "redux-persist";
 import { Provider } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Lottie from "lottie-react-native";
-
 import { useNetInfo } from "@react-native-community/netinfo";
 
 import "react-native-gesture-handler";

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useCallback, useState, useContext } from 'react';
 import { OneSignal } from 'react-native-onesignal';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import BottomSheet from '@gorhom/bottom-sheet';
 import { Pressable, Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
