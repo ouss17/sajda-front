@@ -1,11 +1,24 @@
-import React, { useState, useEffect, useRef, useContext } from 'react'
-import { Button, StyleSheet, Text, TextInput, View, ScrollView, Pressable, Dimensions, Image } from 'react-native'
-import { Back, Eye, BarEye } from '../../assets/Svg/Svg';
-import SessionContext from '../../context/SessionContext'
-
+import { useNavigation } from '@react-navigation/native';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { Dimensions, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { useDispatch, useSelector } from "react-redux";
+import { Back, BarEye, Eye } from '../../assets/Svg/Svg';
+import SessionContext from '../../context/SessionContext';
+import { CheckUser } from '../../modules/CheckUser';
+import { BASE_API_URL } from '@env';
 const ProfilUser = ({ handleMemoryClick }) => {
 
     const { session, setSession } = useContext(SessionContext);
+    const user = useSelector((state) => state.userReducer.value);
+    const dispatch = useDispatch();
+    const navigation = useNavigation();
+    const {isLogged} = CheckUser();
+
+    useEffect(() => {
+        if(CheckUser()){
+            navigation.navigate('Horaires');
+        }
+    }, [user])
 
     const [inputState, setInputState] = useState({
         name: "",
@@ -36,25 +49,12 @@ const ProfilUser = ({ handleMemoryClick }) => {
     }
     const checkLog = () => {
 
-        const {
-            name,
-            email,
-            password,
-            newPassword
-        } = inputState;
-        return fetch('https://sajda-back.vercel.app/users/getMe', {
-            method: 'POST',
+        return fetch(`${BASE_API_URL}/users/getMe`, {
+            method: 'GET',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                state: "modify",
-                name: name,
-                email: email,
-                password: password,
-                newPassword: newPassword
-            }),
         })
             .then(json => {
                 return json.json();

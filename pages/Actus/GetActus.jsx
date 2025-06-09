@@ -3,12 +3,15 @@ import { StyleSheet, Text, ScrollView, ImageBackground, Pressable } from 'react-
 import { View } from 'react-native-animatable';
 import { Back } from '../../assets/Svg/Svg'
 import { useFocusEffect } from '@react-navigation/native';
+import { BASE_API_URL } from '@env';
 
 const GetActus = () => {
 
     const [allActus, setAllActus] = useState([]);
     const getActus = () => {
-        return fetch('http://192.168.1.25:3003/posts/available', {
+        console.log("base url", BASE_API_URL);
+        
+        return fetch(`${BASE_API_URL}/posts/available`, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -20,7 +23,7 @@ const GetActus = () => {
             })
             .then(
                 (res => {
-                    console.log(res);
+                    // console.log(res);
                     setAllActus(res.data);
                 })
             )

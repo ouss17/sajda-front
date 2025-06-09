@@ -1,55 +1,39 @@
-import React, { useState, useEffect, useContext, useRef } from 'react'
-import { StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground, ScrollView, Switch } from 'react-native';
-import LoginUser from '../User/LoginUser';
-import CreateActus from '../Actus/CreateActus';
-import SessionContext from '../../context/SessionContext';
+import React, { useContext, useEffect, useRef } from 'react';
+import { ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Annonce, Back, Bell, Feedback, Logout, Masjid, MyFeed, User, UserManage } from '../../assets/Svg/Svg';
 import MemoryClickContext from '../../context/MemoryClickContext';
-import CreateUser from '../User/CreateUser';
-import { Annonce, Back, Feedback, Logout, Masjid, User, Bell, UserManage, MyFeed } from '../../assets/Svg/Svg';
-import ProfilUser from '../User/ProfilUser';
 import Actus from '../Actus/Actus';
-import GetFeedbacks from '../Feedback/GetFeedbacks';
-import Masdjid from '../Masdjid/Masdjid';
-import OneSignal from 'react-native-onesignal';
-import Notif from './Notif';
-import UserManager from '../User/UserManager';
+import CreateActus from '../Actus/CreateActus';
 import Feedbacks from '../Feedback/Feedbacks';
 import MyFeedbacks from '../Feedback/MyFeedbacks';
+import Masdjid from '../Masdjid/Masdjid';
+import CreateUser from '../User/CreateUser';
+import LoginUser from '../User/LoginUser';
+import ProfilUser from '../User/ProfilUser';
+import UserManager from '../User/UserManager';
+import Notif from './Notif';
+import { useDispatch, useSelector } from 'react-redux';
+import { CheckUser } from '../../modules/CheckUser';
+import { BASE_API_URL } from '@env';
+import SessionContext from '../../context/SessionContext';
+import { removeUser } from '../../reducers/userReducer';
 
 const Settings = () => {
     const { memoryClick, setMemoryClick } = useContext(MemoryClickContext);
+  const { session, setSession } = useContext(SessionContext);
 
     const handleMemoryClick = (page) => {
         setMemoryClick(page);
     }
-    const { session, setSession } = useContext(SessionContext);
-    const checkSession = () => {
-        return fetch('https://sajda-back.vercel.app/users/getMe', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                state: "check",
-            }),
-        })
-            .then(json => {
-                return json.json();
-            })
-            .then(
-                (res) => {
-                    // console.log(res);
-                    setSession(res);
-                }
-            )
-            .catch(error => {
-                console.error(error);
-            });
-    };
+
+    const dispatch = useDispatch();
+
+    const {isLogged} = CheckUser();
+
+    const user = useSelector((state) => state.userReducer.value);
 
     const destroySession = () => {
-        return fetch('https://sajda-back.vercel.app/users/logout', {
+        return fetch(`${BASE_API_URL}/users/logout`, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -63,6 +47,7 @@ const Settings = () => {
                 (res) => {
                     // console.log(res);
                     setSession(false);
+                    dispatch(removeUser());
                 }
             )
             .catch(error => {
@@ -70,9 +55,7 @@ const Settings = () => {
             });
     };
     const scrollView = useRef(null);
-    useEffect(() => {
-        checkSession();
-    }, []);
+
     return (
         <>
             {
@@ -84,7 +67,7 @@ const Settings = () => {
                     >
                         <Text style={[styles.titles, styles.mainTitle]}>Paramètres</Text>
                         {
-                            session.log &&
+                            user.pseudo &&
                             <View style={[styles.accountSecure]}>
                                 <TouchableOpacity style={[styles.account]} onPress={() => handleMemoryClick('ProfilUser')}>
                                     <View style={styles.accountIcon} >
@@ -95,7 +78,7 @@ const Settings = () => {
                         }
                         <ScrollView ref={scrollView} style={styles.container}>
                             {
-                                session.log ?
+                                user.pseudo ?
                                     <View style={[styles.param]}>
                                         <Text style={[styles.texts, styles.infoParam]}>Compte</Text>
                                         <TouchableOpacity style={[styles.params]} onPress={destroySession}>
@@ -132,14 +115,14 @@ const Settings = () => {
                                     /**
                                      * 1 = admin
                                      * 2 = gerant
-                                     * 3 = développeur
+                                     * 3 = dev
                                      * 4 = user
                                      * 5 = imam
                                      */
-                                    session.log && (session.session.role == 3 || session.session.role == 1 || session.session.role == 2) &&
+                                    user.pseudo && (user.role == "admin" || user.role == "gerant" || user.role == "dev") &&
                                     <>
                                         {
-                                            (session.session.role == '3') &&
+                                            (user.role == 'admin' || user.role == "dev") &&
                                             <TouchableOpacity style={[styles.params]} onPress={() => handleMemoryClick('UserManage')}>
                                                 <View style={styles.menuBox} >
                                                     <UserManage />
@@ -172,7 +155,7 @@ const Settings = () => {
                                     </>
                                 }
                                 {
-                                    session.log ?
+                                    user.pseudo ?
                                         <TouchableOpacity style={[styles.params]} onPress={() => handleMemoryClick('MyFeedbacks')}>
                                             <View style={styles.menuBox} >
                                                 <MyFeed width={25} height={25} fill={"#04bf94"} />

@@ -15,13 +15,14 @@ import { OneSignal, LogLevel } from "react-native-onesignal";
 import Menu from "./components/Menu/Menu.jsx";
 // import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import userReducer from "./reducers/userReducer";
+import csrfReducer from "./reducers/csrfReducer";
 
 import lottiePlayer from "./assets/ressources/lotties/noNet.json";
 import lottiePlayerStart from "./assets/ressources/lotties/start.json";
 import { StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const reducers = combineReducers({ userReducer });
+const reducers = combineReducers({ userReducer, csrfReducer });
 const persistConfig = { key: "sajda", storage: AsyncStorage };
 
 const store = configureStore({

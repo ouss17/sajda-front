@@ -8,18 +8,47 @@ import { useNetInfo } from "@react-native-community/netinfo";
 import { useFocusEffect } from '@react-navigation/native';
 import SessionContext from '../../context/SessionContext';
 
+import { BASE_API_URL } from '@env';
+import { useDispatch, useSelector } from 'react-redux';
+import { addCsrf } from '../../reducers/csrfReducer';
+
 const Horaires = () => {
 
     const { session, setSession } = useContext(SessionContext);
     const { masdjidConfig, setMasdjidConfig } = useContext(MasdjidConfigContext)
     const { masdjid, setMasdjid } = useContext(MasdjidContext)
     const netInfo = useNetInfo();
+    const csrf = useSelector((state) => state.csrfReducer.value.csrf);
+    const dispatch = useDispatch();
+   useEffect(() => {
+      console.log("base => " + BASE_API_URL);
+  
+      fetch(`${BASE_API_URL}/api/csrf-token`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+        .then((json) => {
+          return json.json();
+        })
+        .then((res) => {
+          console.log(res);
+  
+          dispatch(addCsrf({ csrf: res.csrfToken }));
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }, []);
 
     /**
      * Récupère les informations de la mosquée ainsi que sa configuration
      */
     const getMasdjidd = () => {
-        fetch('http://192.168.1.25:3003/mosquees/1', {
+        
+        fetch(`${BASE_API_URL}/mosquees/${1}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -134,7 +163,7 @@ const Horaires = () => {
 
         let formattedDate = day + '/' + month + '/' + year;
 
-        fetch('http://192.168.1.25:3003/mosquees/csv/1/' + date.getFullYear(), {
+        fetch(`${BASE_API_URL}/mosquees/csv/1/${date.getFullYear()}`, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',

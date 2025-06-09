@@ -6,6 +6,9 @@ import lottiePlayer from "../../assets/ressources/lotties/loca.json";
 import MasdjidContext from '../../context/MasdjidContext';
 import { useFocusEffect } from '@react-navigation/native';
 
+import { BASE_API_URL } from '@env';
+
+
 const Localisation = () => {
     function ouvrirGoogleMaps() {
         const adresse = '52 Av. du Dr Schaffner, 93270 Sevran';
@@ -27,7 +30,7 @@ const Localisation = () => {
     // const [masdjid, setMasdjid] = useState();
 
     const getMasdjidd = () => {
-        fetch('http://192.168.1.25:3003/mosquees/1', {
+        fetch(`${BASE_API_URL}/mosquees/1`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
