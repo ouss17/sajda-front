@@ -7,8 +7,10 @@ import MasdjidContext from '../../context/MasdjidContext';
 import { useNetInfo } from "@react-native-community/netinfo";
 import { useFocusEffect } from '@react-navigation/native';
 import SessionContext from '../../context/SessionContext';
+import Constants from "expo-constants";
 
-import { BASE_API_URL } from '@env';
+const extra = Constants.expoConfig?.extra || {};
+const API_URL = extra.API_URL || "http://localhost:3003";
 import { useDispatch, useSelector } from 'react-redux';
 import { addCsrf } from '../../reducers/csrfReducer';
 
@@ -21,9 +23,9 @@ const Horaires = () => {
     const csrf = useSelector((state) => state.csrfReducer.value.csrf);
     const dispatch = useDispatch();
    useEffect(() => {
-      console.log("base => " + BASE_API_URL);
+      console.log("base => " + API_URL);
   
-      fetch(`${BASE_API_URL}/api/csrf-token`, {
+      fetch(`${API_URL}/api/csrf-token`, {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -48,7 +50,7 @@ const Horaires = () => {
      */
     const getMasdjidd = () => {
         
-        fetch(`${BASE_API_URL}/mosquees/${1}`, {
+        fetch(`${API_URL}/mosquees/${1}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -163,7 +165,7 @@ const Horaires = () => {
 
         let formattedDate = day + '/' + month + '/' + year;
 
-        fetch(`${BASE_API_URL}/mosquees/csv/1/${date.getFullYear()}`, {
+        fetch(`${API_URL}/mosquees/csv/1/${date.getFullYear()}`, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',

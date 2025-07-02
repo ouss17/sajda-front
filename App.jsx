@@ -20,7 +20,7 @@ import csrfReducer from "./reducers/csrfReducer";
 import lottiePlayer from "./assets/ressources/lotties/noNet.json";
 import lottiePlayerStart from "./assets/ressources/lotties/start.json";
 import { StatusBar } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 
 const reducers = combineReducers({ userReducer, csrfReducer });
 const persistConfig = { key: "sajda", storage: AsyncStorage };
@@ -32,13 +32,13 @@ const store = configureStore({
 });
 const persistor = persistStore(store);
 function App() {
-  OneSignal.Debug.setLogLevel(LogLevel.Verbose);
-  OneSignal.initialize("aaff5f36-71db-4333-9b65-3c44458bc10f");
-  OneSignal.Notifications.requestPermission(true);
+  // // // // // OneSignal.Debug.setLogLevel(LogLevel.Verbose);
+  // // // // // OneSignal.initialize("aaff5f36-71db-4333-9b65-3c44458bc10f");
+  // // // // // OneSignal.Notifications.requestPermission(true);
 
-  OneSignal.Notifications.addEventListener("click", (event) => {
-    console.log("OneSignal: notification clicked:", event);
-  });
+  // // // // // OneSignal.Notifications.addEventListener("click", (event) => {
+  // // // // //   console.log("OneSignal: notification clicked:", event);
+  // // // // // });
 
   // useEffect(() => {
   //   // OneSignal Initialization
@@ -82,50 +82,52 @@ function App() {
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           {/* <StatusBar hidden /> */}
-          <SafeAreaView style={styles.containerBar}>
-            {isOk ? (
-              <>
-                {netInfo.isConnected ? (
-                  <Menu />
-                ) : (
-                  <View style={styles.nowifi}>
-                    {/* <Lottie style={styles.lottie} source={lottiePlayer} autoPlay loop /> */}
-                    <Lottie
-                      ref={lottieViewRef}
-                      onLayout={() => {
-                        lottieViewRef.current?.play();
-                      }}
-                      source={lottiePlayer}
-                      style={styles.lottie}
-                      loop
-                    />
-                    <View style={styles.netTextContainer}>
-                      <Text style={[styles.nowifiText, styles.noWifiGranText]}>
-                        Erreur de connection.
-                      </Text>
-                      <Text style={styles.nowifiText}>
-                        Veuillez vérifier votre connexion internet.
-                      </Text>
+          <SafeAreaProvider>
+            <SafeAreaView style={styles.containerBar}>
+              {isOk ? (
+                <>
+                  {netInfo.isConnected ? (
+                    <Menu />
+                  ) : (
+                    <View style={styles.nowifi}>
+                      {/* <Lottie style={styles.lottie} source={lottiePlayer} autoPlay loop /> */}
+                      <Lottie
+                        ref={lottieViewRef}
+                        onLayout={() => {
+                          lottieViewRef.current?.play();
+                        }}
+                        source={lottiePlayer}
+                        style={styles.lottie}
+                        loop
+                      />
+                      <View style={styles.netTextContainer}>
+                        <Text style={[styles.nowifiText, styles.noWifiGranText]}>
+                          Erreur de connection.
+                        </Text>
+                        <Text style={styles.nowifiText}>
+                          Veuillez vérifier votre connexion internet.
+                        </Text>
+                      </View>
                     </View>
-                  </View>
-                )}
-              </>
-            ) : (
-              <View style={styles.loadApp}>
-                <Lottie
-                  ref={lottieViewRefStart}
-                  onLayout={() => {
-                    lottieViewRefStart.current?.play();
-                  }}
-                  source={lottiePlayerStart}
-                  style={styles.lottie}
-                  loop
-                  speed={1.5}
-                />
-                {/* <Lottie style={styles.lottie} source={lottiePlayerStart} autoPlay loop /> */}
-              </View>
-            )}
-          </SafeAreaView>
+                  )}
+                </>
+              ) : (
+                <View style={styles.loadApp}>
+                  <Lottie
+                    ref={lottieViewRefStart}
+                    onLayout={() => {
+                      lottieViewRefStart.current?.play();
+                    }}
+                    source={lottiePlayerStart}
+                    style={styles.lottie}
+                    loop
+                    speed={1.5}
+                  />
+                  {/* <Lottie style={styles.lottie} source={lottiePlayerStart} autoPlay loop /> */}
+                </View>
+              )}
+            </SafeAreaView>
+          </SafeAreaProvider>
         </PersistGate>
       </Provider>
     </>

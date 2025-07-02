@@ -3,15 +3,19 @@ import { StyleSheet, Text, ScrollView, ImageBackground, Pressable } from 'react-
 import { View } from 'react-native-animatable';
 import { Back } from '../../assets/Svg/Svg'
 import { useFocusEffect } from '@react-navigation/native';
-import { BASE_API_URL } from '@env';
+import Constants from "expo-constants";
+import moment from "moment"; // Ajout de moment
+
+const extra = Constants.expoConfig?.extra || {};
+const API_URL = extra.API_URL || "http://localhost:3003";
 
 const GetActus = () => {
 
     const [allActus, setAllActus] = useState([]);
     const getActus = () => {
-        console.log("base url", BASE_API_URL);
+        console.log("base url", API_URL);
         
-        return fetch(`${BASE_API_URL}/posts/available`, {
+        return fetch(`${API_URL}/posts/available`, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -23,7 +27,6 @@ const GetActus = () => {
             })
             .then(
                 (res => {
-                    // console.log(res);
                     setAllActus(res.data);
                 })
             )
@@ -37,20 +40,15 @@ const GetActus = () => {
 
     useFocusEffect(
         React.useCallback(() => {
-            // console.log('Screen1 est monté');
-
             const intervalId = setInterval(() => {
                 getActus();
-
             }, 5000);
 
             return () => {
-                // console.log('Screen1 est démonté (unmounted)');
-                clearInterval(intervalId); // Nettoyer l'intervalle lorsque l'écran est démonté
+                clearInterval(intervalId);
             };
         }, [])
     );
-
 
     useEffect(() => {
         // console.log(allActus);
@@ -77,7 +75,9 @@ const GetActus = () => {
                         ?
                         allActus.map(actu => (
                             <Pressable key={actu.id} style={[styles.actuContainer]} onPress={() => handleClick(actu.id)}>
-                                <Text style={[styles.date]}>{actu.created_at.split(' ')[0].replaceAll('-', '/').split('/').reverse().join('/')}</Text>
+                                <Text style={[styles.date]}>
+                                    {moment(actu.created_at).format("DD/MM/YYYY HH[h]mm")}
+                                </Text>
                                 <Text style={[styles.title]}>
                                     {actu.title}
                                 </Text>
@@ -115,7 +115,6 @@ const styles = StyleSheet.create({
     mainTitle: {
         textAlign: "center",
         padding: 32,
-        // paddingBottom: 52,
         backgroundColor: "#04bf94",
         color: "white",
         fontSize: 28,
@@ -133,7 +132,6 @@ const styles = StyleSheet.create({
         margin: 16,
         borderRadius: 20,
         marginHorizontal: 30
-        // padding: 16,
     },
     scrollView: {
         marginBottom: 120,
@@ -142,7 +140,6 @@ const styles = StyleSheet.create({
         textAlign: "center",
         fontSize: 20,
         fontWeight: "bold",
-        // position: "relative",
         color: "#333",
         marginBottom: 15
     },
@@ -164,18 +161,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 5,
         fontSize: 16
     },
-    moreIcon: {
-        // transition: 'all 250ms',
-    },
+    moreIcon: {},
     moreIconActive: {},
     content: {
-        // width: "100%",
-        // overflow: "hidden",
         textAlign: "justify",
-        // backgroundColor: "#fff",
-        // borderRadius: 16,
-        // height: "auto",
-        // alignItems: "center",
         fontSize: 18,
         color: "#fff",
         paddingHorizontal: 5,
@@ -183,12 +172,6 @@ const styles = StyleSheet.create({
     },
     bg: {
         flex: 1,
-        // width: '100%',
-        // height: '100%',
-        // position: 'absolute',
-        // top: 0,
-        // left: 0,
-        // zIndex: -1
     },
 })
 

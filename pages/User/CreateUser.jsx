@@ -1,12 +1,16 @@
+import DateTimePicker from '@react-native-community/datetimepicker';
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Dimensions, Image, Pressable, ScrollView, StyleSheet, Text, View, DatePickerAndroid, DatePickerIOS, Platform } from 'react-native';
+import { Dimensions, Image, Pressable, ScrollView, StyleSheet, Text, View, Button, Platform } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from "react-redux";
 import { Back, BarEye, Eye } from '../../assets/Svg/Svg';
 import MemoryClickContext from '../../context/MemoryClickContext';
 import { CheckUser } from '../../modules/CheckUser';
-import { BASE_API_URL } from '@env';
+import Constants from "expo-constants";
+
+const extra = Constants.expoConfig?.extra || {};
+const API_URL = extra.API_URL || "http://localhost:3003";
 import UserIdContext from '../../context/UserIdContext';
 
 const CreateUser = () => {
@@ -14,6 +18,7 @@ const CreateUser = () => {
   const { usersId, setUsersId } = useContext(UserIdContext);
 
   const [birthdate, setBirthdate] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   const [inputState, setInputState] = useState({
     pseudo: "",
@@ -22,6 +27,7 @@ const CreateUser = () => {
     firstname: "",
     lastname: "",
     externalId: "",
+    birthdate: new Date().toISOString().split('T')[0], // Ajouté ici
   });
 
   const [errorAction, setErrorAction] = useState(false);
@@ -51,23 +57,11 @@ const CreateUser = () => {
     }));
   };
 
-  const showDatePicker = async () => {
-    if (Platform.OS === 'android') {
-      try {
-        const { action, year, month, day } = await DatePickerAndroid.open({
-          date: birthdate,
-        });
-        if (action !== DatePickerAndroid.dismissedAction) {
-          const selectedDate = new Date(year, month, day);
-          setBirthdate(selectedDate);
-          handleChangeInput('birthdate', selectedDate.toISOString().split('T')[0]);
-        }
-      } catch ({ code, message }) {
-        console.warn('Cannot open date picker', message);
-      }
-    } else if (Platform.OS === 'ios') {
-      setShowDatePicker(true);
-    }
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || birthdate;
+    setShowDatePicker(Platform.OS === 'ios');
+    setBirthdate(currentDate);
+    handleChangeInput('birthdate', currentDate.toISOString().split('T')[0]);
   };
 
   const imageStyle = {
@@ -80,7 +74,7 @@ const CreateUser = () => {
     const { pseudo, email, password, firstname, lastname } = inputState;
 
     try {
-       const request = await fetch(`${BASE_API_URL}/users/signup`, {
+       const request = await fetch(`${API_URL}/users/signup`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -92,7 +86,7 @@ const CreateUser = () => {
         password,
         lastname,
         firstname,
-        birthDate: birthdate.toISOString().split('T')[0],
+        birthDate: inputState.birthdate, // <-- ici
         externalId: 1234567891,
       }),
     });
@@ -119,7 +113,7 @@ const CreateUser = () => {
    
     
     
-    // return fetch(`${BASE_API_URL}/users/signup`, {
+    // return fetch(`${API_URL}/users/signup`, {
     //   method: "POST",
     //   headers: {
     //     Accept: "application/json",
@@ -203,7 +197,7 @@ const CreateUser = () => {
                 secureTextEntry={securePassword}
                 type="password"
                 name="password"
-                placeholder="123456789"
+                placeholder="Mot2p@ssecomplexe"
                 placeholderTextColor={'#777'}
                 value={inputState.password}
                 onChangeText={(value) => handleChangeInput("password", value)}
@@ -246,24 +240,27 @@ const CreateUser = () => {
             </View>
             <View>
               <Text style={[styles.labels]}>Date de naissance</Text>
-              <Pressable onPress={showDatePicker}>
+              <Pressable onPress={() => setShowDatePicker(true)}>
                 <TextInput
                   style={[styles.inputs]}
-                  value={birthdate.toISOString().split('T')[0]}
+                  value={inputState.birthdate}
                   placeholder="YYYY-MM-DD"
                   placeholderTextColor={'#777'}
-                ref={sixthTextInput}
-                onSubmitEditing={checkLog}
-                editable={false}
+                  ref={sixthTextInput}
+                  onSubmitEditing={checkLog}
+                  editable={false}
                 />
               </Pressable>
-              {Platform.OS === 'ios' && showDatePicker && (
-                <DatePickerIOS
-                  date={birthdate}
+              {showDatePicker && (
+                <DateTimePicker
+                  value={birthdate}
                   mode="date"
-                  onDateChange={(selectedDate) => {
-                    setBirthdate(selectedDate);
-                    handleChangeInput('birthdate', selectedDate.toISOString().split('T')[0]);
+                  display="default"
+                  onChange={(event, selectedDate) => {
+                    setShowDatePicker(Platform.OS === 'ios');
+                    const currentDate = selectedDate || birthdate;
+                    setBirthdate(currentDate);
+                    handleChangeInput('birthdate', currentDate.toISOString().split('T')[0]);
                   }}
                 />
               )}

@@ -14,7 +14,10 @@ import UserManager from '../User/UserManager';
 import Notif from './Notif';
 import { useDispatch, useSelector } from 'react-redux';
 import { CheckUser } from '../../modules/CheckUser';
-import { BASE_API_URL } from '@env';
+import Constants from "expo-constants";
+
+const extra = Constants.expoConfig?.extra || {};
+const API_URL = extra.API_URL || "http://localhost:3003";
 import SessionContext from '../../context/SessionContext';
 import { removeUser } from '../../reducers/userReducer';
 
@@ -33,7 +36,7 @@ const Settings = () => {
     const user = useSelector((state) => state.userReducer.value);
 
     const destroySession = () => {
-        return fetch(`${BASE_API_URL}/users/logout`, {
+        return fetch(`${API_URL}/users/logout`, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',

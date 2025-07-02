@@ -6,7 +6,10 @@ import lottiePlayer from "../../assets/ressources/lotties/loca.json";
 import MasdjidContext from '../../context/MasdjidContext';
 import { useFocusEffect } from '@react-navigation/native';
 
-import { BASE_API_URL } from '@env';
+import Constants from "expo-constants";
+
+const extra = Constants.expoConfig?.extra || {};
+const API_URL = extra.API_URL || "http://localhost:3003";
 
 
 const Localisation = () => {
@@ -30,7 +33,7 @@ const Localisation = () => {
     // const [masdjid, setMasdjid] = useState();
 
     const getMasdjidd = () => {
-        fetch(`${BASE_API_URL}/mosquees/1`, {
+        fetch(`${API_URL}/mosquees/1`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

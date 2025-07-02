@@ -1,39 +1,45 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
-import { Button, StyleSheet, Text, View, Pressable, TouchableOpacity, ScrollView } from 'react-native'
-import { Back } from '../../assets/Svg/Svg';
 import { useFocusEffect } from '@react-navigation/native';
-import { Badge } from '@rneui/themed';
-import FeedbackPopUp from './FeedbackPopUp';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Badge } from 'react-native-elements';
+import { Back } from '../../assets/Svg/Svg';
 import SessionContext from '../../context/SessionContext';
+import FeedbackPopUp from './FeedbackPopUp';
+import { useSelector } from 'react-redux';
 
 
 const MyFeedbacks = ({ handleMemoryClick }) => {
 
     const { session, setSession } = useContext(SessionContext);
+        const user = useSelector((state) => state.userReducer.value);
 
     const [allFeedbacks, setAllFeedbacks] = useState([]);
     const getActus = () => {
+        console.log(user);
+        
 
-        return fetch(`https://sajda-back.vercel.app/responses/user/${session.session.id}`, {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-        })
-            .then(json => {
-                return json.json();
-            })
-            .then(
-                (res => {
-                    // console.log(res);
-                    // res.datas.sort((a, b) => a.checked - b.checked);
-                    setAllFeedbacks(res.data);
-                })
-            )
-            .catch(error => {
-                console.error(error);
-            });
+        // return fetch(`https://sajda-back.vercel.app/responses/user/${session.session.id}`, {
+        //     method: 'GET',
+        //     headers: {
+        //         Accept: 'application/json',
+        //         'Content-Type': 'application/json',
+        //     },
+        // })
+        //     .then(json => {
+        //         return json.json();
+        //     })
+        //     .then(
+        //         (res => {
+        //             // console.log(res);
+        //             // res.datas.sort((a, b) => a.checked - b.checked);
+        //             setAllFeedbacks(res.data);
+        //         })
+        //     )
+        //     .catch(error => {
+        //         console.error(error);
+        //     });
+
+        setAllFeedbacks([]);
 
     }
     useEffect(() => {

@@ -7,9 +7,6 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
-    "androidNavigationBar": {
-      "visible": "immersive"
-    },
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
@@ -23,10 +20,16 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.sajda"
+      "edgeToEdgeEnabled": true
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/ressources/logo/android-chrome-192x192.png"
+    },
+    "extra": {
+      "API_URL": "http://localhost:3003",
+      "eas": {
+        "projectId": "9068d5f2-4059-4f11-b856-2e971eb2e006"
+      }
     }
   }
 }

@@ -4,7 +4,7 @@ import { View } from 'react-native-animatable';
 import { Back, PickPicker } from '../../assets/Svg/Svg'
 import { useFocusEffect } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
-import { Badge } from '@rneui/themed';
+import { Badge } from 'react-native-elements';
 import FeedbackPopUp from './FeedbackPopUp';
 
 

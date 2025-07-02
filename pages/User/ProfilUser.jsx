@@ -5,7 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Back, BarEye, Eye } from '../../assets/Svg/Svg';
 import SessionContext from '../../context/SessionContext';
 import { CheckUser } from '../../modules/CheckUser';
-import { BASE_API_URL } from '@env';
+import Constants from "expo-constants";
+
+const extra = Constants.expoConfig?.extra || {};
+const API_URL = extra.API_URL || "http://localhost:3003";
 const ProfilUser = ({ handleMemoryClick }) => {
 
     const { session, setSession } = useContext(SessionContext);
@@ -49,7 +52,7 @@ const ProfilUser = ({ handleMemoryClick }) => {
     }
     const checkLog = () => {
 
-        return fetch(`${BASE_API_URL}/users/getMe`, {
+        return fetch(`${API_URL}/users/getMe`, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',

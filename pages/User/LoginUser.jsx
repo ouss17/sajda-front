@@ -19,7 +19,10 @@ import SessionContext from "../../context/SessionContext";
 import UserIdContext from "../../context/UserIdContext";
 import { CheckUser } from "../../modules/CheckUser";
 
-import { BASE_API_URL } from "@env";
+import Constants from "expo-constants";
+
+const extra = Constants.expoConfig?.extra || {};
+const API_URL = extra.API_URL || "http://localhost:3003";
 import { addUser } from "../../reducers/userReducer";
 
 const LoginUser = () => {
@@ -83,10 +86,10 @@ const LoginUser = () => {
 
   const checkLog = async () => {
     const { pseudo, password } = inputState;
-    console.log("base", BASE_API_URL);
+    console.log("base", API_URL);
 
     try {
-      const request = await fetch(`${BASE_API_URL}/users/signin`, {
+      const request = await fetch(`${API_URL}/users/signin`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -131,7 +134,7 @@ const LoginUser = () => {
         }, 5000);
     }
 
-    // return fetch(`${BASE_API_URL}/users/signin`, {
+    // return fetch(`${API_URL}/users/signin`, {
     //     method: 'POST',
     //     headers: {
     //         Accept: 'application/json',
@@ -234,7 +237,7 @@ const LoginUser = () => {
                 secureTextEntry={securePassword}
                 type="password"
                 name="password"
-                placeholder="123456789"
+                placeholder="Mot2p@ssecomplexe"
                 placeholderTextColor={"#777"}
                 value={inputState.password}
                 onChangeText={(value) => handleChangeInput("password", value)}

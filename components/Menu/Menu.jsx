@@ -5,7 +5,7 @@ import React, {
   useState,
   useContext,
 } from "react";
-import {OneSignal} from "react-native-onesignal";
+import { OneSignal } from "react-native-onesignal";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
   Pressable,
@@ -40,7 +40,10 @@ import MemoryClickMediaContext from "../../context/MemoryClickMediaContext.js";
 import TemplateCategory from "../../pages/Category/TemplateCategory.jsx";
 import UserIdContext from "../../context/UserIdContext.js";
 import { useDispatch, useSelector } from "react-redux";
-import { BASE_API_URL } from "@env";
+import Constants from "expo-constants";
+
+const extra = Constants.expoConfig?.extra || {};
+const API_URL = extra.API_URL || "http://localhost:3003";
 
 const Tab = createBottomTabNavigator();
 
@@ -71,13 +74,13 @@ const animateInactive = {
 const circleActive = { 0: { scale: 0 }, 1: { scale: 1 } };
 const circleInactive = { 0: { scale: 1 }, 1: { scale: 0 } };
 
-const TabButton = (props) => {
- 
+function TabButton({ accessibilityState, ...props }) {
+  const isSelected = accessibilityState?.selected;
   const { memoryClick, setMemoryClick } = useContext(MemoryClickContext);
   const { memoryClickMedia, setMemoryClickMedia } = useContext(
     MemoryClickMediaContext
   );
-  const { item, onPress, accessibilityState } = props;
+  const { item, onPress } = props;
   const onPressSettings = () => {
     setMemoryClick("settings");
     onPress();
@@ -86,7 +89,7 @@ const TabButton = (props) => {
     setMemoryClickMedia("medias");
     onPress();
   };
-  const focused = accessibilityState.selected;
+  const focused = isSelected;
   const viewRef = useRef(null);
   const circleRef = useRef(null);
   useEffect(() => {
@@ -100,8 +103,6 @@ const TabButton = (props) => {
       }
     }
   }, [focused]);
-
- 
 
   return (
     <>
@@ -214,14 +215,14 @@ const TabButton = (props) => {
 
 const Menu = () => {
   const [usersId, setUsersId] = useState(null);
-  const setExternalUserId = async (externalUserId) => {
-    try {
-      await OneSignal.setExternalUserId(externalUserId);
-      console.log("External UserID défini avec succès :", externalUserId);
-    } catch (error) {
-      console.log("Erreur lors de la définition de l'External UserID :", error);
-    }
-  };
+  // // // const setExternalUserId = async (externalUserId) => {
+  // // //   try {
+  // // //     await OneSignal.setExternalUserId(externalUserId);
+  // // //     console.log("External UserID défini avec succès :", externalUserId);
+  // // //   } catch (error) {
+  // // //     console.log("Erreur lors de la définition de l'External UserID :", error);
+  // // //   }
+  // // // };
 
   // const getExternalUserId = async () => {
   //     try {
@@ -234,36 +235,25 @@ const Menu = () => {
   //     }
   // };
 
-  const getUserId = async () => {
-    try {
-      // Pour la dernière version, utilisez OneSignal.User.getPushSubscription().userId
-      // ou OneSignal.getDeviceState() selon la version.
-      // Essayez d'abord avec la méthode moderne :
-      let userId = null;
-      if (OneSignal.User && OneSignal.User.getPushSubscription) {
-        const pushSub = await OneSignal.User.getPushSubscription();
-        userId = pushSub.userId;
-      } else if (OneSignal.getDeviceState) {
-        const deviceState = await OneSignal.getDeviceState();
-        userId = deviceState.userId;
-      }
-      console.log("OneSignal User ID:", userId);
-      setUsersId(userId);
-      setExternalUserId(userId);
-    } catch (error) {
-      console.log("Erreur lors de l'obtention de l'ID OneSignal:", error);
-    }
-  };
-  useEffect(() => {
-    if (OneSignal && typeof OneSignal.setAppId === "function") {
-      OneSignal.setAppId("aaff5f36-71db-4333-9b65-3c44458bc10f");
-    } else {
-      console.warn("OneSignal natif non chargé ou setAppId non disponible.");
-    }
+  // // // // const getUserId = async () => {
+  // // // //   try {
+  // // // //     const deviceState = await OneSignal.getDeviceState();
+  // // // //     const userId = deviceState.userId;
+  // // // //     console.log("OneSignal User ID:", userId);
+  // // // //     setUsersId(userId);
+  // // // //     setExternalUserId(userId);
+  // // // //     // Faites quelque chose avec l'ID OneSignal ici...
+  // // // //   } catch (error) {
+  // // // //     console.log("Erreur lors de l'obtention de l'ID OneSignal:", error);
+  // // // //   }
+  // // // // };
+  // // // // useEffect(() => {
+  // // // //   // OneSignal.setAppId('aaff5f36-71db-4333-9b65-3c44458bc10f');
+  // // // //   OneSignal.initialize("aaff5f36-71db-4333-9b65-3c44458bc10f");
 
-    getUserId();
-    // getExternalUserId()
-  }, []);
+  // // // //   getUserId();
+  // // // //   // getExternalUserId()
+  // // // // }, []);
 
   const bottomSheetRef = useRef(null);
   const snapPoints = ["3%", "75%"];
