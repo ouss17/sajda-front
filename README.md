@@ -1,80 +1,50 @@
-# Sajda frontend
+# Welcome to your Expo app 👋
 
-Application mobile **Sajda** développée avec [React Native](https://reactnative.dev/) et [Expo](https://expo.dev/).
+This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
----
+## Get started
 
-## Présentation
+1. Install dependencies
 
-Cette application permet d'accéder aux fonctionnalités de la plateforme Sajda : horaires de prières, actualités, gestion de mosquées, retours utilisateurs, notifications, etc.  
-Elle communique avec l'API backend Node.js/MariaDB décrite dans le [README du backend](../backend/README.md).
+   ```bash
+   npm install
+   ```
 
----
+2. Start the app
 
-## Installation
+   ```bash
+   npx expo start
+   ```
 
-### 1. Cloner le dépôt
+In the output, you'll find options to open the app in a
 
-```sh
-git clone https://github.com/ouss17/sajda-front
-cd sajda-front
+- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
+- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
+- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
+- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+
+You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+
+## Get a fresh project
+
+When you're ready, run:
+
+```bash
+npm run reset-project
 ```
 
-### 2. Installer les dépendances
+This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
 
-```sh
-npm install
-```
+## Learn more
 
-### 3. Configuration de l'environnement
+To learn more about developing your project with Expo, look at the following resources:
 
-Créez un fichier `.env` à la racine du projet avec le contenu suivant :
+- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
+- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
 
-```env
-API_URL=<url_de_votre_api>
-```
+## Join the community
 
-Remplacez `<url_de_votre_api>` par l'URL de votre backend (ex : http://localhost:3000).
+Join our community of developers creating universal apps.
 
----
-
-## Lancement de l'application
-
-Pour démarrer l'application en mode développement :
-
-```sh
-expo start
-```
-
-Scannez le QR code affiché avec l'application **Expo Go** sur votre téléphone pour tester l'application.
-
----
-
-## Structure du projet
-
-- `assets/` : images, icônes, ressources statiques
-- `components/` : composants réutilisables (menus, etc.)
-- `context/` : contextes React pour la gestion d'état global
-- `modules/` : modules métiers (ex : gestion utilisateur)
-- `pages/` : pages principales de l'application (Horaires, Feedback, Actus, etc.)
-- `reducers/` : reducers Redux pour la gestion d'état
-- `App.jsx` : point d'entrée principal de l'application
-
----
-
-## Dépendances principales
-
-- **React Native**
-- **Expo**
-- **Redux Toolkit**
-- **React Navigation**
-- **OneSignal** (notifications push)
-- **Axios** ou `fetch` (requêtes API)
-
----
-
-## Notes
-
-- L'application nécessite un backend Sajda fonctionnel (voir [README backend](../backend/README.md)).
-- Pour les notifications push, configurez vos clés OneSignal dans le code ou via l'environnement Expo.
-- Pour la publication sur les stores, suivez la documentation
+- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
+- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.

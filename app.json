@@ -4,32 +4,62 @@
     "slug": "sajda",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/ressources/logo/apple-touch-icon.png",
+    "scheme": "sajda",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
-    "splash": {
-      "image": "./assets/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.doranco.sajda",
+      "infoPlist": {
+        "UIBackgroundModes": ["remote-notification"]
+      },
+      "entitlements": {
+        "aps-environment": "development",
+        "com.apple.security.application-groups": [
+          "group.com.doranco.sajda.onesignal"
+        ]
+      }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/ressources/logo/apple-touch-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.doranco.sajda"
     },
     "web": {
-      "favicon": "./assets/ressources/logo/android-chrome-192x192.png"
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/ressources/logo/favicon-32x32.png"
     },
     "extra": {
-      "API_URL": "http://localhost:3003",
+      "API_URL": "https://pkbd09sm-3003.uks1.devtunnels.ms",
       "eas": {
         "projectId": "9068d5f2-4059-4f11-b856-2e971eb2e006"
       }
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "onesignal-expo-plugin",
+        {
+          "mode": "development"
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
     }
   }
 }

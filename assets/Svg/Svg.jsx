@@ -258,11 +258,22 @@ export const UserManage = () => {
     );
 };
 
+export const Check = ({ fill, stroke }) => {
+    return (
+        <Svg xmlns="http://www.w3.org/2000/svg" style={styles.icons} className="icons" viewBox="0 0 512 512">
+            <Path
+                d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+                fill={fill} strokeLinecap="round" strokeMiterlimit="10" strokeWidth="32"
+                stroke={stroke} />
+        </Svg>
+    )
+}
+
 const styles = StyleSheet.create({
     icons: {
         // backgroundColor: 'red'
         // width: 10
-        transform: "scale(0.7)"
+        transform: [{ scale: 0.7 }]
     },
 
 });
