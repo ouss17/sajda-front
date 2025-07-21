@@ -7,6 +7,8 @@ import DeleteCategory from '../components/DeleteCategory';
 import { useRouter } from 'expo-router';
 import { Back } from '../assets/Svg/Svg';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useSelector } from 'react-redux';
+import { useRedirectIfRoleNotAllowed } from '@/hooks/useRedirectIfRoleNotAllowed';
 
 const API_URL = Constants.expoConfig?.extra?.API_URL || "http://192.168.1.25:3003";
 
@@ -31,6 +33,10 @@ const ListCategories = () => {
   const [toastType, setToastType] = useState<'success' | 'error'>('success');
   const [currentMenu, setCurrentMenu] = useState<'list' | 'add' | 'delete'>('list');
   const router = useRouter();
+
+    const user = useSelector((state: any) => state.user.value);
+useRedirectIfRoleNotAllowed(user, ["admin", "gerant", "dev"]);
+
 
 
   const fetchCategories = async () => {

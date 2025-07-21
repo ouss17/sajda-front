@@ -4,12 +4,15 @@ import { useSelector } from 'react-redux';
 import { useRouter } from 'expo-router';
 import { Back } from '../assets/Svg/Svg';
 import Constants from "expo-constants";
+import { useRedirectIfNoRole } from '@/hooks/useRedirectIfNoRole';
 
 const API_URL = Constants.expoConfig?.extra?.API_URL || "http://192.168.1.25:3003";
 
 const ProfilUser = () => {
   const router = useRouter();
   const user = useSelector((state: any) => state.user.value);
+useRedirectIfNoRole(user);
+
   
 
   const [inputState, setInputState] = useState({

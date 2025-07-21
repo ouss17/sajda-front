@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TextInput, Pressable, ScrollView } from 'react-native';
 import Constants from "expo-constants";
 import { Picker } from '@react-native-picker/picker';
+import { useSelector } from 'react-redux';
+import { useRedirectIfNoRole } from '@/hooks/useRedirectIfNoRole';
 
 const API_URL = Constants.expoConfig?.extra?.API_URL || "http://192.168.1.25:3003";
 
@@ -15,6 +17,9 @@ const CreateFeedback: React.FC<Props> = ({ setIsFeedback }) => {
     title: "",
     detail: "",
   });
+    const user = useSelector((state: any) => state.user.value);
+useRedirectIfNoRole(user);
+
 
   const [disableButton, setDisableButton] = useState(true);
   const [successAction, setSuccessAction] = useState(false);

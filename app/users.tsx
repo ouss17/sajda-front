@@ -7,6 +7,8 @@ import React, { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Back } from '../assets/Svg/Svg';
+import { useSelector } from 'react-redux';
+import { useRedirectIfRoleNotAllowed } from '@/hooks/useRedirectIfRoleNotAllowed';
 
 const API_URL = Constants.expoConfig?.extra?.API_URL || "http://192.168.1.25:3003";
 
@@ -20,6 +22,11 @@ const Users = () => {
   const [saving, setSaving] = useState(false);
   const [currentMenu, setCurrentMenu] = useState<'list' | 'add' | 'delete'>('list');
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+
+    const user = useSelector((state: any) => state.user.value);
+useRedirectIfRoleNotAllowed(user, ["admin", "dev"]);
+
+
 
   const fetchUsers = async () => {
     try {

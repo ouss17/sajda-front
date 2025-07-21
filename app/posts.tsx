@@ -7,6 +7,8 @@ import { Back } from '../assets/Svg/Svg';
 import CreatePost from '../components/CreatePost';
 import DeletePost from '../components/DeletePost';
 import ListPosts from '../components/ListPosts';
+import { useSelector } from "react-redux";
+import { useRedirectIfRoleNotAllowed } from "@/hooks/useRedirectIfRoleNotAllowed";
 
 const API_URL = Constants.expoConfig?.extra?.API_URL || "http://192.168.1.25:3003";
 
@@ -27,6 +29,10 @@ const Posts = () => {
   const [toastMsg, setToastMsg] = useState('');
   const [toastType, setToastType] = useState<'success' | 'error'>('success');
   const [currentMenu, setCurrentMenu] = useState<'list' | 'add' | 'delete'>('list');
+
+      const user = useSelector((state: any) => state.user.value);
+useRedirectIfRoleNotAllowed(user, ["admin", "gerant", "dev"]);
+
   const router = useRouter();
 
   const fetchPosts = async () => {

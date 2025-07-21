@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { Back, Check } from '../assets/Svg/Svg';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRedirectIfNoRole } from '@/hooks/useRedirectIfNoRole';
 
 const API_URL = Constants.expoConfig?.extra?.API_URL || "http://192.168.1.25:3003";
 
@@ -16,6 +17,9 @@ const MyFeedbacks = () => {
   const [openedContentIndex, setOpenedContentIndex] = useState<number | null>(null);
   const [responses, setResponses] = useState<{ [key: number]: { response: string, pseudo: string } }>({});
   const scrollView = useRef<ScrollView>(null);
+
+useRedirectIfNoRole(user);
+
 
   const getFeedbacks = async () => {
     if (!user?.id) return;

@@ -1,10 +1,11 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { StyleSheet, View, Text, ScrollView, Pressable, TextInput } from 'react-native';
 import Constants from "expo-constants";
-import { Back, Check } from '../assets/Svg/Svg';
 import { useRouter } from 'expo-router';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useRef, useState } from 'react';
+import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useSelector } from 'react-redux';
+import { Back, Check } from '../assets/Svg/Svg';
+import { useRedirectIfRoleNotAllowed } from "@/hooks/useRedirectIfRoleNotAllowed";
 
 const API_URL = Constants.expoConfig?.extra?.API_URL || "http://192.168.1.25:3003";
 
@@ -19,6 +20,9 @@ const Feedbacks = () => {
   const [sending, setSending] = useState<{ [key: number]: boolean }>({});
   const [targetFilter, setTargetFilter] = useState<'all' | 'mosquee' | 'admin' | 'imam'>('all');
   const scrollView = useRef<ScrollView>(null);
+
+useRedirectIfRoleNotAllowed(user, ["admin", "gerant", "imam", "dev"]);
+
 
   const roleTargets: { [key: string]: Array<'mosquee' | 'admin' | 'imam'> } = {
     admin: ['mosquee', 'admin', 'imam'],

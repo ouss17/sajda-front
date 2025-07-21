@@ -5,6 +5,8 @@ import Constants from "expo-constants";
 import { Back } from '../assets/Svg/Svg';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useSelector } from 'react-redux';
+import { useRedirectIfRoleNotAllowed } from '@/hooks/useRedirectIfRoleNotAllowed';
 
 const API_URL = Constants.expoConfig?.extra?.API_URL || "http://192.168.1.25:3003";
 
@@ -14,6 +16,10 @@ const Masdjid = () => {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [saveMessage, setSaveMessage] = useState<string | null>(null);
+
+    const user = useSelector((state: any) => state.user.value);
+useRedirectIfRoleNotAllowed(user, ["admin", "gerant", "imam", "dev"]);
+
 
   useEffect(() => {
     const fetchMosquee = async () => {

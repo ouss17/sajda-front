@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, ScrollView, Image, Pressable, TextInput, Dimensions } from 'react-native';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'expo-router';
 import { Back } from '../assets/Svg/Svg';
 import Constants from "expo-constants";
+import { useRedirectIfNoRole } from '@/hooks/useRedirectIfNoRole';
 
 const API_URL = Constants.expoConfig?.extra?.API_URL || "http://192.168.1.25:3003";
 
@@ -21,6 +22,8 @@ const ChangePassword = () => {
   const handleChangeInput = (name: string, value: string) => {
     setInputState(prev => ({ ...prev, [name]: value }));
   };
+
+useRedirectIfNoRole(user);
 
   const handleUpdatePassword = async () => {
     try {
